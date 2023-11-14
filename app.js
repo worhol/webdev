@@ -6,12 +6,18 @@ const eta = new Eta({ views: `${Deno.cwd()}/templates/` });
 
 const app = new Hono();
 
-app.post("/feedbacks/:type",  countController.incrementFeedbackCount);
+app.post("/courses/:courseId/feedbacks/:type",  countController.incrementFeedbackCount);
+
 app.post("/courses", courseController.createCourse);
+
 app.post("/courses/:courseId/delete", courseController.deleteCourse);
-app.get("courses/:courseId", courseController.showCourse);
-app.get("/feedbacks/:type", countController.getFeedbackCount);
+
+app.get("/courses/:courseId", courseController.showCourse);
+
+app.get("/courses/:courseId/feedbacks/:type", countController.getFeedbackCount);
+
 app.get("/courses", courseController.showForm);
+
 app.get("/", async (c) => {
     return c.html(await eta.render("index.eta"));
   });

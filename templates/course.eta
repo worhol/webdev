@@ -6,8 +6,25 @@
 </head>
 
 <body>
-        <h1><%=it.course.course%></h1>
-  <p><a href="/courses">Back to courses</a></p>
+  <h1><%=it.course.course%></h1>
+  <h2>How would you rate this course?<h2>
+      <form method="POST" action="/courses/<%= it.course.id %>/feedbacks/1">
+        <button type="submit" name="feedback" value="1">Poor</button>
+      </form>
+      <form method="POST" action="/courses/<%= it.course.id %>/feedbacks/2">
+        <button type="submit" name="feedback" value="2">Fair</button>
+      </form>
+      <form method="POST" action="/courses/<%= it.course.id %>/feedbacks/3">
+        <button type="submit" name="feedback" value="3">Good</button>
+      </form>
+      <form method="POST" action="/courses/<%= it.course.id %>/feedbacks/4">
+        <button type="submit" name="feedback" value="4">Very good</button>
+      </form>
+      <form method="POST" action="/courses/<%= it.course.id %>/feedbacks/5">
+        <button type="submit" name="feedback" value="5">Excellent</button>
+      </form>
+      <p><a href="/courses">Back to courses</a></p>
+      
 </body>
 
 </html>

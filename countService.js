@@ -1,18 +1,23 @@
-const  getFeedback = async (type)=>{
-    const kv = await Deno.openKv();
-    const count = await kv.get([`feedback${type}`]);
-    return count.value ?? 0;
+const getFeedback = async (courseId, type) => {
+  const kv = await Deno.openKv();
+  const key = [`feedback_${courseId}_${type}`];
+  const count = await kv.get(key);
+  return count.value ?? 0;
 };
 
-const incrementFeedback = async (type)=>{
-    let counter = await getFeedback(type);
-    counter++;
-    await setFeedback(counter, type);
+const incrementFeedback = async (courseId, type) => {
+  let counter = await getFeedback(courseId, type);
+//   console.log(`Counter: ${counter}`);
+  counter++;
+  await setFeedback(courseId, counter, type);
 };
 
-const setFeedback = async (count, type)=>{
-    const kv = await Deno.openKv();
-    await kv.set([`feedback${type}`], count);
+const setFeedback = async (courseId, count, type) => {
+  const kv = await Deno.openKv();
+  //   const key = [`${courseId}${type}`];
+  const key = [`feedback_${courseId}_${type}`];
+  await kv.set(key, count);
+//   console.log(`Set count ${count} for key ${key}`);
 };
 
-export{getFeedback, incrementFeedback};
+export { getFeedback, incrementFeedback };
