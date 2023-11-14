@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>COURSE</title>
+</head>
+
+<body>
+        <h1><%=it.course.course%></h1>
+  <p><a href="/courses">Back to courses</a></p>
+</body>
+
+</html>
