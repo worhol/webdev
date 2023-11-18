@@ -1,6 +1,10 @@
 import { Eta } from "https://deno.land/x/eta@v3.1.0/src/index.ts";
 import * as courseService from "./courseService.js";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+import {
+  getSignedCookie,
+} from "https://deno.land/x/hono@v3.7.4/helper.ts";
+import * as countController from "./countController.js";
 
 const validator = z.object({
   course: z.string().min(4, {
@@ -9,6 +13,8 @@ const validator = z.object({
 });
 
 const eta = new Eta({ views: `${Deno.cwd()}/templates/` });
+const secret = "secret";
+
 
 const createCourse = async (c) => {
   const body = await c.req.parseBody();
@@ -34,8 +40,11 @@ const showForm = async (c) => {
 
 const showCourse = async (c) => {
   const id = c.req.param("courseId");
+  const sessionId =
+    (await getSignedCookie(c, secret, "sessionId"));
+    const count = countController.getSessionCounts(sessionId, id);
   return c.html(
-    eta.render("course.eta", { course: await courseService.getCourse(id) })
+    eta.render("course.eta", { course: await courseService.getCourse(id), count: count })
   );
 };
 
